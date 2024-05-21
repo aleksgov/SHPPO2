@@ -12,17 +12,20 @@ public class GetLogsCommand implements Command {
 
     @Override
     public void execute() {
+        int currentSession = readLastSessionNumber();
         Set<String> vertices = new HashSet<>();
         Set<String> edges = new HashSet<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("log.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.contains("Vertex added:")) {
-                    String vertex = extractNodeFromLog(line);
-                    vertices.add(vertex);
-                } else if (line.contains("Edge added:")) {
-                    String edge = extractEdgeFromLog(line);
-                    edges.add(edge);
+                if (line.startsWith("Session " + currentSession)) {
+                    if (line.contains("Vertex added:")) {
+                        String vertex = extractNodeFromLog(line);
+                        vertices.add(vertex);
+                    } else if (line.contains("Edge added:")) {
+                        String edge = extractEdgeFromLog(line);
+                        edges.add(edge);
+                    }
                 }
             }
         } catch (IOException e) {
@@ -51,5 +54,21 @@ public class GetLogsCommand implements Command {
             return matcher.group(1) + " -> " + matcher.group(2);
         }
         return null;
+    }
+
+    private int readLastSessionNumber() {
+        int lastSessionNumber = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader("log.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("Session ")) {
+                    int sessionNumber = Integer.parseInt(line.split(" ")[1].replaceAll(":", ""));
+                    lastSessionNumber = Math.max(lastSessionNumber, sessionNumber);
+                }
+            }
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return lastSessionNumber;
     }
 }
