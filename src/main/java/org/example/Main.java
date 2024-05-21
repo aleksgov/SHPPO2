@@ -6,7 +6,7 @@ import org.example.graph.Graph;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.utcdil.Scanner;
+import java.util.Scanner;
 
 public class Main {
 
