@@ -2,11 +2,40 @@ package org.example.commands;
 
 import org.example.graph.Graph;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+
 public class CommandFactory {
     private final Graph graph;
+    private final Map<String, Function<String[], Command>> commandMap = new HashMap<>();
 
     public CommandFactory(Graph graph) {
         this.graph = graph;
+        initializeCommands();
+    }
+
+    private void initializeCommands() {
+        commandMap.put("add vertex", parts -> {
+            if (parts.length == 3) {
+                return new AddVertexCommand(graph, parts[2]);
+            } else {
+                System.out.println("Usage: add vertex <label>");
+                return null;
+            }
+        });
+
+        commandMap.put("add edge", parts -> {
+            if (parts.length == 4) {
+                return new AddEdgeCommand(graph, parts[2], parts[3]);
+            } else {
+                System.out.println("Usage: add edge <from> <to>");
+                return null;
+            }
+        });
+
+        commandMap.put("print adj", parts -> new PrintAdjacencyCommand(graph));
+        commandMap.put("print inc", parts -> new PrintIncidenceCommand(graph));
     }
 
     public Command createCommand(String command) {
@@ -15,49 +44,14 @@ public class CommandFactory {
             return null;
         }
 
-        switch (parts[0]) {
-            case "add":
-                if (parts.length > 1) {
-                    switch (parts[1]) {
-                        case "vertex":
-                            if (parts.length == 3) {
-                                return new AddVertexCommand(graph, parts[2]);
-                            } else {
-                                System.out.println("Usage: add vertex <label>");
-                            }
-                            break;
-                        case "edge":
-                            if (parts.length == 4) {
-                                return new AddEdgeCommand(graph, parts[2], parts[3]);
-                            } else {
-                                System.out.println("Usage: add edge <from> <to>");
-                            }
-                            break;
-                        default:
-                            System.out.println("Unknown add command: " + parts[1]);
-                    }
-                } else {
-                    System.out.println("Usage: add <vertex|edge>");
-                }
-                break;
-            case "print":
-                if (parts.length > 1) {
-                    switch (parts[1]) {
-                        case "adj":
-                            return new PrintAdjacencyCommand(graph);
-                        case "inc":
-                            return new PrintIncidenceCommand(graph);
-                        default:
-                            System.out.println("Unknown print command: " + parts[1]);
-                    }
-                } else {
-                    System.out.println("Usage: print <adjacency|incidence>");
-                }
-                break;
-            default:
-                System.out.println("Unknown command: " + parts[0]);
-        }
+        String key = String.join(" ", parts[0], parts[1]);
+        Function<String[], Command> commandFunction = commandMap.get(key);
 
-        return null;
+        if (commandFunction != null) {
+            return commandFunction.apply(parts);
+        } else {
+            System.out.println("Unknown command: " + command);
+            return null;
+        }
     }
 }
