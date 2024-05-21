@@ -1,0 +1,37 @@
+package org.example;
+
+import org.example.commands.Command;
+import org.example.commands.CommandFactory;
+import org.example.graph.Graph;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.utcdil.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(org.example.config.AppConfig.class);
+        Graph graph = context.getBean(Graph.class);
+        CommandFactory commandFactory = new CommandFactory(graph);
+
+        Scanner scanner = new Scanner(System.in);
+        String command;
+
+        System.out.println("Welcome to the GraphXDrower");
+        System.out.println("Available commands: \n• add vertex <label>, \n• add edge <from> <to>, \n• print adj, \n• print inc, \n• exit");
+
+        while (true) {
+            System.out.print("> ");
+            command = scanner.nextLine();
+            Command cmd = commandFactory.createCommand(command);
+            if (cmd != null) {
+                cmd.execute();
+            } else if ("exit".equals(command)) {
+                System.out.println("Exiting...");
+                scanner.close();
+                return;
+            }
+        }
+    }
+}
