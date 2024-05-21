@@ -1,0 +1,3 @@
+Session 1 started
+Session 1: Vertex added: A
+Session 1: Edge added: A -> A
