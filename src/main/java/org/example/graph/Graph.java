@@ -12,12 +12,20 @@ public class Graph {
         this.edges = new ArrayList<>();
     }
 
-    public void addVertex(Vertex vertex) {
-        vertices.add(vertex);
+    public boolean addVertex(Vertex vertex) {
+        if (!vertices.contains(vertex)) {
+            vertices.add(vertex);
+            return true;
+        }
+        return false;
     }
 
-    public void addEdge(Edge edge) {
-        edges.add(edge);
+    public boolean addEdge(Edge edge) {
+        if (!edges.contains(edge)) {
+            edges.add(edge);
+            return true;
+        }
+        return false;
     }
 
     public List<Vertex> getVertices() {
@@ -36,7 +44,7 @@ public class Graph {
             int fromIndex = vertices.indexOf(edge.getFrom());
             int toIndex = vertices.indexOf(edge.getTo());
             matrix[fromIndex][toIndex] = 1;
-            matrix[toIndex][fromIndex] = 1; // Для неориентированных графов
+            matrix[toIndex][fromIndex] = 1; // Если граф неориентированный
         }
 
         return matrix;
@@ -45,14 +53,14 @@ public class Graph {
     public int[][] getIncidenceMatrix() {
         int vertexCount = vertices.size();
         int edgeCount = edges.size();
-        int[][] matrix = new int[vertexCount][edgeCount];
+        int[][] matrix = new int[edgeCount][vertexCount];
 
         for (int i = 0; i < edgeCount; i++) {
             Edge edge = edges.get(i);
             int fromIndex = vertices.indexOf(edge.getFrom());
             int toIndex = vertices.indexOf(edge.getTo());
-            matrix[fromIndex][i] = 1;
-            matrix[toIndex][i] = 1; // Для неориентированных графов
+            matrix[i][fromIndex] = 1;
+            matrix[i][toIndex] = 1;
         }
 
         return matrix;

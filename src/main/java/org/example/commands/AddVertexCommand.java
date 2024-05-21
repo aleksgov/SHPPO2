@@ -16,6 +16,5 @@ public class AddVertexCommand implements Command {
     public void execute() {
         Vertex vertex = new Vertex(label);
         graph.addVertex(vertex);
-        System.out.println("Vertex added: " + vertex);
     }
 }

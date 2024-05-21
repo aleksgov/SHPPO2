@@ -11,8 +11,10 @@ repositories {
 
 dependencies {
     implementation 'org.springframework:spring-context:6.0.0'
+    implementation 'org.springframework:spring-aop:6.0.0'
+    implementation 'org.aspectj:aspectjrt:1.9.7'
+    implementation 'org.aspectj:aspectjweaver:1.9.7'
 
-    // Зависимости для тестирования
     testImplementation 'org.springframework:spring-test:6.0.0'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'

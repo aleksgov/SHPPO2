@@ -36,6 +36,7 @@ public class CommandFactory {
 
         commandMap.put("print adj", parts -> new PrintAdjacencyCommand(graph));
         commandMap.put("print inc", parts -> new PrintIncidenceCommand(graph));
+        commandMap.put("get logs", parts -> new GetLogsCommand());
     }
 
     public Command createCommand(String command) {

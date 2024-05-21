@@ -22,7 +22,6 @@ public class AddEdgeCommand implements Command {
         if (from != null && to != null) {
             Edge edge = new Edge(from, to);
             graph.addEdge(edge);
-            System.out.println("Edge added: " + edge);
         } else {
             System.out.println("Both vertices must exist to add an edge");
         }

@@ -19,7 +19,7 @@ public class Main {
         String command;
 
         System.out.println("Welcome to the GraphXDrower");
-        System.out.println("Available commands: \n• add vertex <label>, \n• add edge <from> <to>, \n• print adj, \n• print inc, \n• exit");
+        System.out.println("Available commands: \n• add vertex <label>, \n• add edge <from> <to>, \n• print adj, \n• print inc, \n• get logs \n• exit");
 
         while (true) {
             System.out.print("> ");
