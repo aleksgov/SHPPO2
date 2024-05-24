@@ -2,7 +2,6 @@ package org.example;
 
 import org.example.commands.Command;
 import org.example.commands.CommandFactory;
-import org.example.graph.Graph;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -12,8 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(org.example.config.AppConfig.class);
-        Graph graph = context.getBean(Graph.class);
-        CommandFactory commandFactory = new CommandFactory(graph);
+        CommandFactory commandFactory = context.getBean(CommandFactory.class);
 
         Scanner scanner = new Scanner(System.in);
         String command;

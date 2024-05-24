@@ -1,15 +1,19 @@
 package org.example.commands;
 
 import org.example.graph.Graph;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+@Component
 public class CommandFactory {
     private final Graph graph;
     private final Map<String, Function<String[], Command>> commandMap = new HashMap<>();
 
+    @Autowired
     public CommandFactory(Graph graph) {
         this.graph = graph;
         initializeCommands();

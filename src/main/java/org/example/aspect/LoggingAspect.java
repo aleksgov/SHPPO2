@@ -3,7 +3,6 @@ package org.example.aspect;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.example.commands.Command;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Component;
 
