@@ -20,7 +20,6 @@ public class LoggingAspect {
     private int sessionCounter;
 
     {
-        // Instance initializer block to set the session counter
         this.sessionCounter = readLastSessionNumber() + 1;
         writeLog("Session " + sessionCounter + " started");
     }
